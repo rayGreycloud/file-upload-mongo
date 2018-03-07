@@ -42,7 +42,7 @@ const storage = new GridFsStorage({
         if (err) {
           return reject(err);
         }
-        const filename = buf.toString('hex') + path.extname(file.originalName);
+        const filename = buf.toString('hex') + path.extname(file.originalname);
         const fileInfo = {
           filename,
           bucketName: 'uploads'
@@ -67,6 +67,22 @@ app.get('/', (req, res) => {
 app.post('/upload', upload.single('file'), (req, res) => {
   // res.json({ file: req.file });
   res.redirect('/');
+});
+
+// @route GET /files 
+// @desc Display all uploaded files in json
+app.get('/files', (req, res) => {
+  gfs.files.find().toArray((err, files) => {
+    // Check for existing files 
+    if (!files || files.length === 0) {
+      return res.status(404).json({
+        err: 'No files exist'
+      });
+    }
+    
+    // Files exist 
+    return res.json(files); 
+  });
 });
 
 // Start server
