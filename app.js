@@ -71,7 +71,7 @@ app.get('/', (req, res) => {
           file.isImage = false;
         }
       });
-      res.render('index', { files: true });
+      res.render('index', { files: files });
     }
   });
 });
