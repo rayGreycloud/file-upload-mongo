@@ -7,7 +7,12 @@
   
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    
+  
+  <style>
+    img {
+      width: 100%;
+    }
+  </style>  
   <title>MongoDB File Uploads</title>
 </head>
 <body>
@@ -26,11 +31,27 @@
           </div>
           <input type="submit" value="Submit" class="btn btn-primary btn-block">
         </form>
+        <hr>
+        <% if(files){ %>
+          <% files.forEach(function(file) { %>
+          <div class="card card-body mb-3">
+            <% if(file.isImage) { %>
+            <img src="image/<%= file.filename %>" alt="">
+            <% } else { %>
+              <%= file.filename %>
+            <% } %>
+            <form method="POST" action="/files/<%= file._id %>?_method=DELETE">
+              <button class="btn btn-danger btn-block mt-4">Delete</button>
+            </form>
+          </div>  
+          <% }) %>
+        <% } else { %>
+          <p>No files to display</p>
+        <% } %> 
       </div>
     </div>
   </div>
 
-  
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
