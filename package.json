@@ -1,0 +1,11 @@
+{
+  "name": "file-upload-mongo",
+  "version": "1.0.0",
+  "description": "file upload to mongodb with gridfs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rayGreycloud",
+  "license": "ISC"
+}
