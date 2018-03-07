@@ -62,5 +62,12 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// @route POST /upload 
+// @desc Uploads file to DB
+app.post('/upload', upload.single('file'), (req, res) => {
+  // res.json({ file: req.file });
+  res.redirect('/');
+});
+
 // Start server
 app.listen(port, () => console.log(`Server started and listening on port ${port}`));
