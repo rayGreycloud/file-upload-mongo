@@ -85,5 +85,20 @@ app.get('/files', (req, res) => {
   });
 });
 
+// @route GET /files/:filename 
+// @desc Display single file object
+app.get('/files/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check for file 
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+    // File exists 
+    return res.json(file);    
+  });
+});
+
 // Start server
 app.listen(port, () => console.log(`Server started and listening on port ${port}`));
