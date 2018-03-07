@@ -33,6 +33,28 @@ conn.once('open', () => {
   gfs.collection('uploads');
 });
 
+// Create storage engine 
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalName);
+        const fileInfo = {
+          filename,
+          bucketName: 'uploads'
+        };
+        
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+// Pass storage engine to multer
+const upload = multer({ storage });
 
 // @route GET /
 // @desc Loads form
